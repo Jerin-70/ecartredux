@@ -3,46 +3,59 @@ import Header from '../components/Header'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToWishlist } from '../redux/slices/wishlistSlice'
+import { addTocart } from '../redux/slices/cartSlice'
 
 const View = () => {
-  const dispatch = useDispatch()
-  const userWishlist = useSelector(state=>state.wishlistReducer)
+  const userCart = useSelector(state=>state.cartReducer)
 
-  const [product,setProduct] = useState({})
-  const {id} = useParams()
+  const dispatch = useDispatch()
+  const userWishlist = useSelector(state => state.wishlistReducer)
+
+  const [product, setProduct] = useState({})
+  const { id } = useParams()
   console.log(id);
-  const {allProducts} = useSelector(state=>state.productReducer)
+  const { allProducts } = useSelector(state => state.productReducer)
   console.log(allProducts);
 
 
-  useEffect(()=>{
-    if(sessionStorage.getItem("allProducts")){
+  useEffect(() => {
+    if (sessionStorage.getItem("allProducts")) {
       const allProducts = JSON.parse(sessionStorage.getItem("allProducts"))
-      setProduct(allProducts.find(item=>item.id==id))
+      setProduct(allProducts.find(item => item.id == id))
     }
-    
-  },[])
+
+  }, [])
   console.log(product);
 
-  const handleWishlist = ()=>{
-    const existingWishlist = userWishlist?.find(item=>item.id==id)
-    if(existingWishlist){
+  const handleWishlist = () => {
+    const existingWishlist = userWishlist?.find(item => item.id == id)
+    if (existingWishlist) {
       alert("Product already exist in Wishlist!!")
-    }else{
+    } else {
       dispatch(addToWishlist(product))
       alert("product added to wishlist")
     }
   }
-  
-  
+const handleCart = () => {
+  dispatch(addTocart(product))
+    const existingProduct = userCart?.find(item => item.id == id)
+    if (existingProduct) {
+      alert("Product Quantity incremented")
+    } else {
+      
+      alert("product added to cart")
+    }
+  }
+
+
   return (
     <>
       <Header />
       <div className='flex flex-col mx-5 grow'>
         <div className='grid grid-cols-2 items-center h-screen'>
           <img width={"600px"} src={product?.thumbnail} alt="" />
-         
-          
+
+
 
           <div>
             <h3 className='font-bold'>{product?.id}</h3>
@@ -56,30 +69,30 @@ const View = () => {
             </p>
             <h3 className="font-bold">Client Reviews</h3>
             {
-              product?.reviews?.length>0 ?
-              product?.reviews?.map(item=>(
-                <div key={item.date} className="shadow border rounded p-2 mb-2">
-                  <h5>
-                    <span className="font-bold">
-                      {item?.reviewName}
-                    </span> :
-                    <span>{item?.comment}</span>
-                  </h5>
-                  <p>Rating : {item?.rating} <i className="fa-solid fa-star text-yellow-400"></i></p>
-                </div>
-              )):
-              <div className="font-bold text-red-600">No reviews yet!!</div>
+              product?.reviews?.length > 0 ?
+                product?.reviews?.map((item,index) => (
+                  <div key={index} className="shadow border rounded p-2 mb-2">
+                    <h5>
+                      <span className="font-bold">
+                        {item?.reviewName}
+                      </span> :
+                      <span>{item?.comment}</span>
+                    </h5>
+                    <p>Rating : {item?.rating} <i className="fa-solid fa-star text-yellow-400"></i></p>
+                  </div>
+                )) :
+                <div className="font-bold text-red-600">No reviews yet!!</div>
             }
-           
+
           </div>
 
 
         </div>
-         <div className='mt-2'>
-              <button onClick={handleWishlist} className='bg-blue-700 rounded text-white p-2 me-5'>ADD TO WISHLIST</button>
-              <button className='bg-blue-700 rounded text-white p-2'>ADD TO CART</button>
+        <div className='mt-2'>
+          <button onClick={handleWishlist} className='bg-blue-700 rounded text-white p-2 me-5'>ADD TO WISHLIST</button>
+          <button onClick={handleCart} className='bg-blue-700 rounded text-white p-2'>ADD TO CART</button>
 
-            </div>
+        </div>
 
       </div>
     </>

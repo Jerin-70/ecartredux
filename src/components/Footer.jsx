@@ -7,7 +7,7 @@ const Footer = () => {
       <footer className='bg-indigo-500 text-white p-5 mt-5 w-full'>
         <div className='flex justify-between p-5'>
           <div className='flex flex-col'>
-            <h1 className='text-2xl font-bold text-white'><i class="fa-solid fa-truck-fast"></i>E-Cart</h1>
+            <h1 className='text-2xl font-bold text-white'><i className="fa-solid fa-truck-fast"></i>E-Cart</h1>
             <p>designed and build with all the love in the world by the luminar team with the help of our contributers.</p>
             <p>code licensed luminar , docs cc by 3.0</p>
             <p>Currently v5.3.2</p>
@@ -29,11 +29,11 @@ const Footer = () => {
           <div className='flex flex-col'>
             <h2 className='text-2xl font-bold'>Follow us on</h2>
             <div className='space-x-4 text-2xl mt-2'>
-              <i class="fa-brands fa-facebook"></i>
-              <i class="fa-brands fa-instagram"></i>
-              <i class="fa-brands fa-twitter"></i>
-              <i class="fa-brands fa-github"></i>
-              <i class="fa-brands fa-linkedin"></i>
+              <i className="fa-brands fa-facebook"></i>
+              <i className="fa-brands fa-instagram"></i>
+              <i className="fa-brands fa-twitter"></i>
+              <i className="fa-brands fa-github"></i>
+              <i className="fa-brands fa-linkedin"></i>
             </div>
           </div>
         </div>
